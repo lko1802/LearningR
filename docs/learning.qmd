@@ -1,0 +1,32 @@
+---
+title: "Reproducible document"
+author: "Lærke Overgaard"
+format: html
+---
+
+## Basics of R
+
+```{r}
+1 + 1
+```
+## Setup code chunk
+
+```{r setup}
+library(tidyverse)
+```
+## About me
+
+- Lærke Karner Overgaard
+- Research unit of Clinical Pharmacology
+- Department of clinical research
+- University of Southern Denmark
+
+I am a **pharmacist** and my research is in *insulin adherence*
+
+## Simple code
+
+```{r}
+3 * 3
+```
+
+
