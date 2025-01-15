@@ -394,7 +394,7 @@ Figure&nbsp;3: BMI and glycemia, side by side
 <h2 class="anchored" data-anchor-id="plotting-two-continous-variables">Plotting two continous variables</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(post_meal_data, <span class="fu">aes</span>(<span class="at">x =</span> BMI, <span class="at">y =</span> auc_pg)) <span class="sc">+</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
@@ -456,7 +456,7 @@ Figure&nbsp;4: scatterplot showing BMI against AUC of blood glucose
 10    52  24.5   72.2
 # ℹ 21 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(post_meal_data, <span class="sc">-</span>Group) <span class="co">#here we select all data except group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(post_meal_data, <span class="sc">-</span>Group) <span class="co"># here we select all data except group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 31 × 84
    OFS.ID   Age   BMI Length Weight Bone.mineral.DXA Fat.mass...DXA Fat.mass.DXA
@@ -515,7 +515,7 @@ Figure&nbsp;4: scatterplot showing BMI against AUC of blood glucose
 # ℹ 21 more rows
 # ℹ 1 more variable: Fat.free.soft.tissue.DXA &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(post_meal_data, <span class="fu">contains</span> (<span class="st">"0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(post_meal_data, <span class="fu">contains</span>(<span class="st">"0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 31 × 29
    P.Glucose.0.OGTT P.GLucose.30.OGTT P.Glucose.60.OGTT P.Glucose.90.OGTT
@@ -540,6 +540,50 @@ Figure&nbsp;4: scatterplot showing BMI against AUC of blood glucose
 </div>
 </div>
 </section>
+<section id="renaming-specific-columns" class="level2">
+<h2 class="anchored" data-anchor-id="renaming-specific-columns">Renaming specific columns</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>small_post_meal_data <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">auc_glucose =</span> auc_pg) <span class="co"># New name to the left</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 7
+      id   Age   BMI Group auc_glucose auc_ins glykemi
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1     1    50  27.5 FDR          806.  28728.       0
+ 2     2    51  33.7 FDR          944.  42243.       0
+ 3     3    43  26.3 FDR          694.   7108.       0
+ 4     4    55  25.9 FDR          731.  37593.       0
+ 5     5    53  29.4 FDR         1004.  33863.       0
+ 6     6    51  23.7 FDR          713.  15008.       0
+ 7     7    48  23.9 FDR          965.  23196.       0
+ 8     8    35  22   FDR          741.  15272.       0
+ 9     9    54  26.4 FDR          848.  24426.       0
+10    10    52  24.5 FDR          759.  22475.       0
+# ℹ 21 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>small_post_meal_data <span class="sc">|&gt;</span> <span class="co"># renaming multiple characters at once</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">auc_glucose =</span> auc_pg,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">auc_insulin =</span> auc_ins</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 7
+      id   Age   BMI Group auc_glucose auc_insulin glykemi
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+ 1     1    50  27.5 FDR          806.      28728.       0
+ 2     2    51  33.7 FDR          944.      42243.       0
+ 3     3    43  26.3 FDR          694.       7108.       0
+ 4     4    55  25.9 FDR          731.      37593.       0
+ 5     5    53  29.4 FDR         1004.      33863.       0
+ 6     6    51  23.7 FDR          713.      15008.       0
+ 7     7    48  23.9 FDR          965.      23196.       0
+ 8     8    35  22   FDR          741.      15272.       0
+ 9     9    54  26.4 FDR          848.      24426.       0
+10    10    52  24.5 FDR          759.      22475.       0
+# ℹ 21 more rows</code></pre>
+</div>
+</div>
+</section>
 <section id="about-me" class="level2">
 <h2 class="anchored" data-anchor-id="about-me">About me</h2>
 <ul>
@@ -553,7 +597,7 @@ Figure&nbsp;4: scatterplot showing BMI against AUC of blood glucose
 <section id="simple-code" class="level2">
 <h2 class="anchored" data-anchor-id="simple-code">Simple code</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9</code></pre>
 </div>
