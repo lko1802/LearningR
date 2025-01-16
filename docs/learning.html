@@ -992,7 +992,7 @@ Figure&nbsp;4: scatterplot showing BMI against AUC of blood glucose
 <span id="cb85-13"><a href="#cb85-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">insulin_glucose_ratio =</span> (auc_ins <span class="sc">/</span> auc_pg),</span>
 <span id="cb85-14"><a href="#cb85-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">insulin_insensitive =</span> <span class="fu">if_else</span>(insulin_glucose_ratio <span class="sc">&gt;</span> <span class="fu">mean</span>(insulin_glucose_ratio), <span class="st">"Insensitive"</span>, <span class="st">"sensitive"</span>)</span>
 <span id="cb85-15"><a href="#cb85-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb85-16"><a href="#cb85-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> BMI, <span class="at">y =</span> Bone.mineral.DXA)) <span class="sc">+</span></span>
+<span id="cb85-16"><a href="#cb85-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> BMI, <span class="at">y =</span> Bone.mineral.DXA, <span class="at">colour =</span> insulin_insensitive)) <span class="sc">+</span></span>
 <span id="cb85-17"><a href="#cb85-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb85-18"><a href="#cb85-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
 <span id="cb85-19"><a href="#cb85-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(insulin_insensitive))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1034,27 +1034,59 @@ Figure&nbsp;5: Two, mult-dimensional plots of our data.
 </figcaption>
 </figure>
 </div>
-<pre><code>
-
-## About me
-
-- Lærke Karner Overgaard
-- Research unit of Clinical Pharmacology
-- Department of clinical research
-- University of Southern Denmark
-
-I am a **pharmacist** and my research is in *insulin adherence*
-
-## Simple code
-
+<pre><code>## Changing colour
 ::: {.cell}
 
 ```{.r .cell-code}
-3 * 3</code></pre>
+# Tasks 1. and 2.
+post_meal_data |&gt;
+  mutate(hyperglycemia = if_else(glykemi == 1, "Yes", "No")) |&gt;
+  ggplot(aes(x = Group, fill = hyperglycemia)) +
+  geom_bar(position = position_dodge()) +
+  scale_fill_viridis_d(option = "cirvidis")</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in viridisLite::viridis(n, alpha, begin, end, direction, option):
+Option 'cirvidis' does not exist. Defaulting to 'viridis'.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="learning_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tasks 3. and 4.</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>post_meal_data <span class="sc">|&gt;</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> auc_pg, <span class="at">y =</span> auc_ins, <span class="at">colour =</span> BMI)) <span class="sc">+</span></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">option =</span> <span class="st">"inferno"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="learning_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="about-me" class="level2">
+<h2 class="anchored" data-anchor-id="about-me">About me</h2>
+<ul>
+<li>Lærke Karner Overgaard</li>
+<li>Research unit of Clinical Pharmacology</li>
+<li>Department of clinical research</li>
+<li>University of Southern Denmark</li>
+</ul>
+<p>I am a <strong>pharmacist</strong> and my research is in <em>insulin adherence</em></p>
+</section>
+<section id="simple-code" class="level2">
+<h2 class="anchored" data-anchor-id="simple-code">Simple code</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9</code></pre>
 </div>
-<p>:::</p>
+</div>
 </section>
 <section id="testing-for-git" class="level2">
 <h2 class="anchored" data-anchor-id="testing-for-git">Testing for Git</h2>

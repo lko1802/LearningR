@@ -280,12 +280,29 @@ post_meal_data |>
     insulin_glucose_ratio = (auc_ins / auc_pg),
     insulin_insensitive = if_else(insulin_glucose_ratio > mean(insulin_glucose_ratio), "Insensitive", "sensitive")
   ) |>
-  ggplot(aes(x = BMI, y = Bone.mineral.DXA)) +
+  ggplot(aes(x = BMI, y = Bone.mineral.DXA, colour = insulin_insensitive)) +
   geom_point() +
   geom_smooth() +
   facet_grid(cols = vars(insulin_insensitive))
 ```
 ```
+## Changing colour
+```{r}
+# Tasks 1. and 2.
+post_meal_data |>
+  mutate(hyperglycemia = if_else(glykemi == 1, "Yes", "No")) |>
+  ggplot(aes(x = Group, fill = hyperglycemia)) +
+  geom_bar(position = position_dodge()) +
+  scale_fill_viridis_d(option = "cirvidis")
+
+
+# Tasks 3. and 4.
+post_meal_data |>
+  ggplot(aes(x = auc_pg, y = auc_ins, colour = BMI)) +
+  geom_point() +
+  scale_colour_viridis_c(option = "inferno")
+```
+
 
 
 ## About me
