@@ -206,6 +206,22 @@ tidier_post_meal_data |>
 # If else is in the form: condition, what to do with true, what to do with false
 ```
 
+## Exercise 11.9 (filter and mutate)
+```{r}
+# Task 1.
+post_meal_data |>
+  filter(BMI >= 20 & BMI <= 40 & Group == "FDR")
+# there is 16
+
+# Task 2.
+post_meal_data |>
+  mutate(
+    percent_body_fat = (Fat.mass.DXA / Weight) * 100
+  ) |>
+  filter(percent_body_fat > 30)
+# There is 10
+```
+
 
 
 ## About me
