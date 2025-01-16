@@ -28,6 +28,12 @@ tidier_post_meal_data <- small_post_meal_data |>
   ) |>
   filter(glykemi == 0) |>
   select(-glykemi)
+
+tidied_post_meal_data <- tidier_post_meal_data |>
+  mutate(
+    insulin_glucose_ratio = auc_insulin / auc_glucose,
+    Group = if_else(Group == "CTR", "Control", "First-degree relative")
+  )
 ```
 ## Showing the data
 
@@ -222,6 +228,34 @@ post_meal_data |>
 # There is 10
 ```
 
+## Visualizing with data plots
+
+```{r}
+tidied_post_meal_data |>
+  mutate(overweigt = if_else(BMI >= 25, "Overweight", "Not Overweight")) |>
+  ggplot(aes(x = overweigt, y = insulin_glucose_ratio)) +
+  geom_jitter()
+```
+## Plotting three or more variables
+
+```{r}
+tidied_post_meal_data |>
+  filter(BMI < 30) |>
+  ggplot(aes(x = Age, y = auc_insulin, colour = Group)) +
+  geom_point()
+```
+```{r}
+tidied_post_meal_data |>
+  filter(BMI < 30) |>
+  mutate(young = if_else(Age < 40, "Young", "Old")) |>
+  ggplot(aes(x = BMI, y = insulin_glucose_ratio, colour = Group)) +
+  geom_point() +
+  facet_grid(rows = vars(young)) +
+  labs(
+    x = "Body Mass Index (BMI)",
+    y = "Insulin to glucose ratio"
+  )
+```
 
 
 ## About me
