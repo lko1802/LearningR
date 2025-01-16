@@ -22,8 +22,10 @@ post_meal_data <- read_csv2(
 small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
 
 tidier_post_meal_data <- small_post_meal_data |>
-  rename(auc_glucose = auc_pg,
-         auc_insulin = auc_ins) |>
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  ) |>
   filter(glykemi == 0) |>
   select(-glykemi)
 ```
@@ -134,7 +136,7 @@ small_post_meal_data |> # renaming multiple characters at once
   rename(
     auc_glucose = auc_pg,
     auc_insulin = auc_ins
-    )
+  )
 ```
 
 ## Select and rename tasks
@@ -177,23 +179,33 @@ TRUE & TRUE
 TRUE & FALSE
 FALSE & FALSE
 TRUE & NA
-#if you use the "AND" it will only evaluate TRUE if both statements are ture
+# if you use the "AND" it will only evaluate TRUE if both statements are ture
 
-TRUE|TRUE
-TRUE|FALSE
-FALSE|FALSE
-TRUE|NA
-#If you use OR only one condition needs to be true to evaluate as TRUE
-
-
+TRUE | TRUE
+TRUE | FALSE
+FALSE | FALSE
+TRUE | NA
+# If you use OR only one condition needs to be true to evaluate as TRUE
 ```
 ```{r}
 small_post_meal_data |>
   filter(Group == "CTR", BMI >= 25)
 
 small_post_meal_data |>
-  filter(Group == "CTR" |BMI >= 25)
+  filter(Group == "CTR" | BMI >= 25)
 ```
+
+## Modify or add column
+```{r}
+tidier_post_meal_data |>
+  mutate(
+    insulin_glucose_ratio = auc_insulin / auc_glucose,
+    Group = if_else(Group == "CTR", "Control", "First-degree relative")
+  )
+# Mutate creates new column (in this case ratio between two other columns)
+# If else is in the form: condition, what to do with true, what to do with false
+```
+
 
 
 ## About me
