@@ -285,7 +285,7 @@ post_meal_data |>
   geom_smooth() +
   facet_grid(cols = vars(insulin_insensitive))
 ```
-```
+
 ## Changing colour
 ```{r}
 # Tasks 1. and 2.
@@ -295,7 +295,6 @@ post_meal_data |>
   geom_bar(position = position_dodge()) +
   scale_fill_viridis_d(option = "cirvidis")
 
-
 # Tasks 3. and 4.
 post_meal_data |>
   ggplot(aes(x = auc_pg, y = auc_ins, colour = BMI)) +
@@ -303,23 +302,24 @@ post_meal_data |>
   scale_colour_viridis_c(option = "inferno")
 ```
 
-
-
-## About me
-
-- Lærke Karner Overgaard
-- Research unit of Clinical Pharmacology
-- Department of clinical research
-- University of Southern Denmark
-
-I am a **pharmacist** and my research is in *insulin adherence*
-
-## Simple code
+## Calculating summary statistics 
 
 ```{r}
-3 * 3
+tidied_post_meal_data |>
+  summarise(
+    max_bmi = max(BMI),
+    min_bmi = min(BMI)
+  )
 ```
 
-## Testing for Git
+## Summarise with splitting
 
-It is cold today
+```{r}
+tidied_post_meal_data |>
+  group_by(Group) |>
+  summarise(
+    mean_age = mean(Age),
+    mean_bmi = mean(BMI)
+  ) |>
+  ungroup() #ungroup should be done on the actual output to make sure next calculations are not affected
+```

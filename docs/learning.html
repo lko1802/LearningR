@@ -1034,16 +1034,16 @@ Figure&nbsp;5: Two, mult-dimensional plots of our data.
 </figcaption>
 </figure>
 </div>
-<pre><code>## Changing colour
-::: {.cell}
-
-```{.r .cell-code}
-# Tasks 1. and 2.
-post_meal_data |&gt;
-  mutate(hyperglycemia = if_else(glykemi == 1, "Yes", "No")) |&gt;
-  ggplot(aes(x = Group, fill = hyperglycemia)) +
-  geom_bar(position = position_dodge()) +
-  scale_fill_viridis_d(option = "cirvidis")</code></pre>
+</section>
+<section id="changing-colour" class="level2">
+<h2 class="anchored" data-anchor-id="changing-colour">Changing colour</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tasks 1. and 2.</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>post_meal_data <span class="sc">|&gt;</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hyperglycemia =</span> <span class="fu">if_else</span>(glykemi <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Group, <span class="at">fill =</span> hyperglycemia)) <span class="sc">+</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span></span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"cirvidis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in viridisLite::viridis(n, alpha, begin, end, direction, option):
 Option 'cirvidis' does not exist. Defaulting to 'viridis'.</code></pre>
@@ -1067,30 +1067,42 @@ Option 'cirvidis' does not exist. Defaulting to 'viridis'.</code></pre>
 </figure>
 </div>
 </div>
-<p>:::</p>
+</div>
 </section>
-<section id="about-me" class="level2">
-<h2 class="anchored" data-anchor-id="about-me">About me</h2>
-<ul>
-<li>Lærke Karner Overgaard</li>
-<li>Research unit of Clinical Pharmacology</li>
-<li>Department of clinical research</li>
-<li>University of Southern Denmark</li>
-</ul>
-<p>I am a <strong>pharmacist</strong> and my research is in <em>insulin adherence</em></p>
-</section>
-<section id="simple-code" class="level2">
-<h2 class="anchored" data-anchor-id="simple-code">Simple code</h2>
+<section id="calculating-summary-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-summary-statistics">Calculating summary statistics</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>tidied_post_meal_data <span class="sc">|&gt;</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_bmi =</span> <span class="fu">max</span>(BMI),</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_bmi =</span> <span class="fu">min</span>(BMI)</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9</code></pre>
+<pre><code># A tibble: 1 × 2
+  max_bmi min_bmi
+    &lt;dbl&gt;   &lt;dbl&gt;
+1    33.7    20.2</code></pre>
 </div>
 </div>
 </section>
-<section id="testing-for-git" class="level2">
-<h2 class="anchored" data-anchor-id="testing-for-git">Testing for Git</h2>
-<p>It is cold today</p>
+<section id="summarise-with-splitting" class="level2">
+<h2 class="anchored" data-anchor-id="summarise-with-splitting">Summarise with splitting</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>tidied_post_meal_data <span class="sc">|&gt;</span></span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Group) <span class="sc">|&gt;</span></span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_age =</span> <span class="fu">mean</span>(Age),</span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_bmi =</span> <span class="fu">mean</span>(BMI)</span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co">#ungroup should be done on the actual output to make sure next calculations are not affected</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  Group                 mean_age mean_bmi
+  &lt;chr&gt;                    &lt;dbl&gt;    &lt;dbl&gt;
+1 Control                   40.2     25.8
+2 First-degree relative     47.9     25.9</code></pre>
+</div>
+</div>
 </section>
 
 </main>
